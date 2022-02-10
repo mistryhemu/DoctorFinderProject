@@ -167,7 +167,7 @@ namespace DoctorFinderProject.Areas.Hospital.Controllers
 
         public IActionResult AddPatient()
         {
-            //Add Patient method
+            //Add Patient 
             return View();
         }
         [HttpPost]
