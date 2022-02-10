@@ -1,0 +1,77 @@
+﻿@model DoctorFinderProject.Models.Doctortbl
+
+@{
+    ViewData["Title"] = "EditDoctor";
+    Layout = "~/Areas/Hospital/Views/HospitalLayout.cshtml";
+}
+
+<h2>EditDoctor</h2>
+
+<h4>Doctortbl</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+
+        <form asp-action="EditDoctor" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*<div class="form-group">
+            <label asp-for="DoctorId" class="control-label"></label>
+            <input asp-for="DoctorId" class="form-control" />
+            <span asp-validation-for="DoctorId" class="text-danger"></span>
+        </div>*@
+
+            @Html.HiddenFor(model => model.DoctorId)
+            @Html.HiddenFor(model => model.ProfileImage)
+            <div class="form-group">
+                <label asp-for="HospitalId" class="control-label"></label>
+                <input asp-for="HospitalId" class="form-control" />
+                <span asp-validation-for="HospitalId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNo" class="control-label"></label>
+                <input asp-for="PhoneNo" class="form-control" />
+                <span asp-validation-for="PhoneNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProfileImage" class="control-label"></label>
+                <input type="file" name="postedFiles" />
+                <span asp-validation-for="ProfileImage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Degree" class="control-label"></label>
+                <input asp-for="Degree" class="form-control" />
+                <span asp-validation-for="Degree" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Speciality" class="control-label"></label>
+                <input asp-for="Speciality" class="form-control" />
+                <span asp-validation-for="Speciality" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+            <div class="form-action no-color">
+                @Html.ActionLink("Back to List", "ManageDoctor")
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+

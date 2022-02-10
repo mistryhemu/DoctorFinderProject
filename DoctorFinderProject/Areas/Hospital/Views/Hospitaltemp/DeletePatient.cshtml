@@ -1,0 +1,98 @@
+﻿@model DoctorFinderProject.Models.Pateinttbl
+
+@{
+    ViewData["Title"] = "DeletePatient";
+    Layout = "~/Areas/Hospital/Views/HospitalLayout.cshtml";
+}
+
+<h2>DeletePatient</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Pateinttbl</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PateintId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PateintId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Mobile)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Mobile)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ProfileImage)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProfileImage)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfBirth)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateOfBirth)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StateId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StateId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CityId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CityId)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-action no-color">
+            <input type="submit" value="Delete" class="btn btn-default" />
+            @Html.ActionLink("Back to List", "ManagePatient")
+        </div>
+    }
+</div>
+    
+    @*<form asp-action="DeletePatient">
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>*@
+

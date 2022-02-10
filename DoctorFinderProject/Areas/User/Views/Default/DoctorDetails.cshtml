@@ -1,0 +1,43 @@
+﻿@model DoctorFinderProject.Models.Doctortbl
+@{
+    ViewData["Title"] = "DoctorDetails";
+    Layout = "~/Areas/User/Views/UserTempLayout.cshtml";
+}
+
+<section class="w3l-serices-6 py-5" id="services1">
+    <div class="container py-lg-5 py-md-4 py-2">
+        <div class="title-content text-center">
+            <h6 class="title-subhny text-center">
+            </h6>
+            <h3 class="title-w3l mb-sm-5 mb-4 pb-sm-o pb-2 text-center">@Model.FirstName Details</h3>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 grids-feature">
+                    <div class="area-box icon-blue">
+                        <a href="#"> <img src="~/Uploads/@Model.ProfileImage" alt="" class="img-fluid radius-image" style="max-height:426px !important;width:640px !important; height:426px !important"></a>
+                        <!--//des-->
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 grids-feature">
+                    <div class="area-box icon-blue">
+                        <ul>
+                            <li><h4>Address</h4></li>
+                            <li><span> @Model.Degree</span></li>
+                            <li><span> @Model.Speciality</span></li>
+                           
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 grids-feature">
+                    <h4>Description</h4>
+                    <span>Available time</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+

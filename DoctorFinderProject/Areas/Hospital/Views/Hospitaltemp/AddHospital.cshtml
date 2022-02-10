@@ -1,0 +1,68 @@
+﻿@model DoctorFinderProject.Models.Hospitaltbl
+
+@{
+    ViewData["Title"] = "AddHospital";
+    Layout = "~/Areas/Hospital/Views/HospitalLayout.cshtml";
+}
+
+<h2>AddHospital</h2>
+
+<h4>Hospitaltbl</h4>
+<hr />
+<div class="form-body">
+    <form action="#" method="post" enctype="multipart/form-data">
+        @*<div class="form-group">
+            <label>Hospital Id</label>
+            <input type="text" class="form-control"  name="HospitalId"/>
+
+        </div>*@
+        <div class="form-group">
+            <label>Hospital Name</label>
+            <input type="text" class="form-control" name="HospitalName" />
+        </div>
+        <div class="form-group">
+            <label>Address</label>
+            <textarea asp-for="Address" class="form-control"></textarea>
+            @*<input type="text" class="form-control" name="Address" />*@
+        </div>
+        @*<div class="form-group">
+            <label>State Id</label>
+            <input type="text" class="form-control" name="StateId" />
+        </div>*@
+        @*<div class="form-group">
+        <label>City Id</label>
+        <input type="text" class="form-control" name="CityId" />
+        </div>*@
+        <div class="form-group">
+            <label>Profile Image</label>
+            <input type="file" class="form-control" name="postedFiles" />
+        </div>
+        <div class="form-group">
+            <label>Contact No</label>
+            <input type="text" class="form-control" name="ContactNo" />
+        </div>
+        <div class="form-group">
+            <label>Email</label>
+            <input type="text" class="form-control" name="Email" />
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="text" class="form-control" name="Password" />
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <textarea asp-for="Description" class="form-control"></textarea>
+            @*<input type="text" class="form-control" name="Address" />*@
+        </div>
+        <div class="form-group">
+            <input type="submit" name="Create" class="btn btn-default" />
+        </div>
+
+    </form>
+    </div>
+
+
+<div>
+   <a href="ManageHospital">Back to List</a>
+</div>
+

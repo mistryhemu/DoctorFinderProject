@@ -1,0 +1,115 @@
+﻿@model DoctorFinderProject.Models.Pateinttbl
+
+@{
+    ViewData["Title"] = "EditPatient";
+    Layout = "~/Areas/Hospital/Views/HospitalLayout.cshtml";
+}
+
+<h2>EditPatient</h2>
+
+<h4>Pateinttbl</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditPatient" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*<div class="form-group">
+            <label asp-for="PateintId" class="control-label"></label>
+            <input asp-for="PateintId" class="form-control" />
+            <span asp-validation-for="PateintId" class="text-danger"></span>
+        </div>*@
+            @Html.HiddenFor(model => model.PateintId)
+            @Html.HiddenFor(model => model.ProfileImage)
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mobile" class="control-label"></label>
+                <input asp-for="Mobile" class="form-control" />
+                <span asp-validation-for="Mobile" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProfileImage" class="control-label"></label>
+                <input type="file" name="postedFiles" />
+                <span asp-validation-for="ProfileImage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateOfBirth" class="control-label"></label>
+                <input asp-for="DateOfBirth" class="form-control" />
+                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <textarea asp-for="Address" class="form-control"></textarea>
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="StateId" class="control-label"></label>
+            @Html.DropDownListFor(m => m.StateId, ViewBag.states as IEnumerable<SelectListItem>, "--- Select State ---", new { @class = "form-control" })
+            <span asp-validation-for="StateId" class="text-danger"></span>
+        </div>
+            <div class="form-group">
+            <label class="control-label"> City</label>
+            <select id="drpcity" class="form-control"></select>
+        </div>
+            @*<div class="form-group">
+            <label class="control-label"> City </label>
+            <select id="lstCities">
+                <option>-- Select City --</option>
+            </select>
+        </div>*@
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+
+            <div>
+                <a asp-action="ManagePatient">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript" >
+    
+    $("#StateId").change(function () {
+        BindCityDropDown($("#StateId").val());
+    });
+
+    $(document).ready(function () {
+       //debugger;
+        BindCityDropDown($("#StateId").val());
+    });
+
+    function BindCityDropDown(stateid) {
+        $.ajax({
+            url: "/Hospital/Hospitaltemp/GetCitiesByStateId",
+            type: "GET",
+            data: { StateId: stateid },
+            dataType: "json",
+            success: function (citydata) {
+                $("#drpcity").empty();
+                $("#drpcity").append("<option value=''>--- Select City ---</option>");
+                $.each(citydata, function (key, item) {
+                    $("#drpcity").append("<option value='" + item.cityId + "'>" + item.cityName + "</option>");
+                });
+            }
+        });
+    }
+</script>

@@ -1,0 +1,74 @@
+﻿@model DoctorFinderProject.Models.Pateinttbl
+
+@{
+    ViewData["Title"] = "AddPatient";
+    Layout = "~/Areas/Hospital/Views/HospitalLayout.cshtml";
+}
+
+<h2>AddPatient</h2>
+
+<h4>Pateinttbl</h4>
+<hr />
+<div class="form-body">
+    <form action="#" method="post" enctype="multipart/form-data">
+
+
+        @*<div class="form-group">
+                <label asp-for="PateintId" class="control-label"></label>
+                <input asp-for="PateintId" class="form-control" />
+                <span asp-validation-for="PateintId" class="text-danger"></span>
+            </div>*@
+        <div class="form-group">
+            <label>First Name</label>
+            <input type="text" class="form-control" name="FirstName" />
+        </div>
+        <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" class="form-control" name="LastName" />
+        </div>
+        <div class="form-group">
+            <label>Email</label>
+            <input type="text" class="form-control" name=" Email" />
+        </div>
+        <div class="form-group">
+            <label>Mobile</label>
+            <input type="text" class="form-control" name=" Mobile" />
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="text" class="form-control" name="Password" />
+        </div>
+        <div class="form-group">
+            <label>Profile Image</label>
+            <input type="file" class="form-control" name="postedFile" />
+        </div>
+        <div class="form-group">
+            <label>Date Of Birth</label>
+            <input type="text" class="form-control" name="DateOfBirth" />
+        </div>
+        <div class="form-group">
+            <label>Address</label>
+            <textarea asp-for="Address" class="form-control"></textarea>
+        </div>
+        @*<div class="form-group">
+                <label asp-for="StateId" class="control-label"></label>
+                <input asp-for="StateId" class="form-control" />
+                <span asp-validation-for="StateId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CityId" class="control-label"></label>
+                <input asp-for="CityId" class="form-control" />
+                <span asp-validation-for="CityId" class="text-danger"></span>
+            </div>*@
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </form>
+</div>
+</div>
+<div>
+    <a href="ManagePatient">Back to List</a>
+</div>
+
+
+
