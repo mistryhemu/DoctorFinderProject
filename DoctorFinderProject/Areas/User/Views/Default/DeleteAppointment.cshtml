@@ -1,0 +1,62 @@
+﻿@model DoctorFinderProject.Models.Appointmenttbl
+
+@{
+    ViewData["Title"] = "DeleteAppointment";
+    Layout = "~/Areas/User/Views/UserTempLayout.cshtml";
+}
+
+<h2>DeleteAppointment</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Appointmenttbl</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        @*<dt>
+            @Html.DisplayNameFor(model => model.AptId)
+        </dt>*@
+        @*<dd>
+            @Html.DisplayFor(model => model.AptId)
+        </dd>*@
+        <dt>
+            <label>Hospital Name</label>
+            @*@Html.DisplayNameFor(model => model.HospitalId)*@
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HospitalId)
+        </dd>
+        <dt>
+            <label>Patient Name</label>
+            @*@Html.DisplayNameFor(model => model.PateintId)*@
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PateintId)
+        </dd>
+        <dt>
+            <label>Doctor Name</label>
+            @*@Html.DisplayNameFor(model => model.DoctorId)*@
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DoctorId)
+        </dd>
+        <dt>
+            <label>Date time </label>
+            @*@Html.DisplayNameFor(model => model.AptDateTime)*@
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AptDateTime)
+        </dd>
+        <dt>
+            <label>Status</label>
+            @*@Html.DisplayNameFor(model => model.AptStatus)*@
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AptStatus)
+        </dd>
+    </dl>
+    
+    <form asp-action="DeleteAppointment">
+        <input type="submit" value="Delete" class="btn btn-primary" /> |
+        <a asp-action="ManageAppointment">Back to List</a>
+    </form>
+</div>

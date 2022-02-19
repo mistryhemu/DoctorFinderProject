@@ -147,6 +147,12 @@ namespace DoctorFinderProject.Areas.Hospital.Controllers
             var data = dc.Citytbls.Where(s => s.StateId == StateId);
             return Json(data.ToList());
         }
+
+        public JsonResult GetDoctorByHospitalId(int hospitalId)
+        {
+            var data = dc.Doctortbls.Where(s => s.HospitalId == hospitalId);
+            return Json(data.ToList());
+        }
         public IActionResult Delete(int Id)
         {
             return View(dc.Hospitaltbls.Find(Id));

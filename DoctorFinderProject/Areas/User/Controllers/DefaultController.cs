@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -71,6 +72,74 @@ namespace DoctorFinderProject.Areas.User.Controllers
             //string imageName = dc.Hospitaltbls.Find(HospitalId).ProfileImage;
             //ViewBag.imageName = imageName;
             return View(dc.Doctortbls.Find(DoctorId));
+        }
+
+        public IActionResult AddApointment()
+        {
+            var data = dc.Hospitaltbls.ToList();
+
+            List<SelectListItem> li = new List<SelectListItem>();
+            foreach (var item in data)
+            {
+                li.Add(new SelectListItem { Text = item.HospitalName, Value = item.HospitalId.ToString() });
+            }
+            ViewBag.hospitals = li;
+            return View();
+
+        }
+        [HttpPost]
+        public IActionResult AddApointment(Appointmenttbl obj)
+        {
+            obj.PateintId = 1;
+
+            dc.Appointmenttbls.Add(obj);
+            dc.SaveChanges();
+            return RedirectToAction("Home");
+        }
+        public IActionResult ManageAppointment()
+        {
+            var data = dc.Appointmenttbls.Where(t => t.PateintId == 1).ToList();
+
+            
+            //foreach(var item in data)
+            //{
+            //    //item.Doctor.FirstName = dc.Doctortbls.Find(item.DoctorId).FirstName;
+            //}
+            return View(data);
+        }
+        public IActionResult EditAppointment(int AptId)
+        {
+            var data = dc.Hospitaltbls.ToList();
+
+            List<SelectListItem> li = new List<SelectListItem>();
+            foreach (var item in data)
+            {
+                li.Add(new SelectListItem { Text = item.HospitalName, Value = item.HospitalId.ToString() });
+            }
+            ViewBag.hospitals = li;
+           
+            return View(dc.Appointmenttbls.Find(AptId));
+        }
+
+        [HttpPost]
+        public IActionResult EditAppointment(Appointmenttbl obj)
+        {
+            obj.PateintId = 1;
+            dc.Appointmenttbls.Update(obj);
+            dc.SaveChanges();
+            return RedirectToAction("ManageAppointment");
+        }
+        public IActionResult DeleteAppointment(int Id)
+        {
+            return View(dc.Appointmenttbls.Find(Id));
+        }
+        [HttpPost]
+        [ActionName("DeleteAppointment")]
+        public IActionResult DeleteAppointmentRec(int Id)
+        {
+            dc.Appointmenttbls.Remove(dc.Appointmenttbls.Find(Id));
+            dc.SaveChanges();
+            return RedirectToAction("ManageAppointment");
         }
     }
     }

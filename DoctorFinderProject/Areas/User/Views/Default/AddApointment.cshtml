@@ -1,0 +1,102 @@
+﻿@model DoctorFinderProject.Models.Appointmenttbl
+
+@{
+    ViewData["Title"] = "AddApointment";
+    Layout = "~/Areas/User/Views/UserTempLayout.cshtml";
+}
+
+<hr />
+<div class="container" style="margin-top: 100px">
+    <div class="col-md-12">
+        <div class="col-md-2">
+        </div>
+
+        <div class="col-md-8">
+            <form asp-action="AddApointment" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                @*<div class="form-group">
+                        <label asp-for="AptId" class="control-label"></label>
+                        <input asp-for="AptId" class="form-control" />
+                        <span asp-validation-for="AptId" class="text-danger"></span>
+                    </div>*@
+
+                <div class="form-group">
+                    <label class="control-label">Hospital Name</label>
+
+                    @Html.DropDownListFor(m => m.HospitalId, ViewBag.hospitals as IEnumerable<SelectListItem>, "--- Select Hospital ---", new { @class = "form-control" })
+
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Patient Name</label>
+                    <input asp-for="PateintId" class="form-control" readonly="readonly" />
+                    <span asp-validation-for="PateintId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Doctor Name</label>
+                    @*<span asp-validation-for="DoctorId" class="text-danger"></span>*@
+                    <select id="drpDoctor" class="form-control"></select>
+                    @Html.HiddenFor(m => m.DoctorId)
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Date And Time</label>
+                    <input asp-for="AptDateTime" class="form-control" />
+                    <span asp-validation-for="AptDateTime" class="text-danger"></span>
+                </div>
+                @*<div class="form-group">
+                        <label class="control-label">Status</label>
+                        <input asp-for="AptStatus" class="form-control" />
+                        <span asp-validation-for="AptStatus" class="text-danger"></span>
+                    </div>*@
+                <div class="form-group">
+                    <input type="submit" value="Book Appointment" class="btn btn-primary" onclick="return SubmitForm();" />
+                    <input type="reset" value="Reset" class="btn btn-secondary" />
+                </div>
+            </form>
+        </div>
+        @*<div>
+                <a asp-action="Index">Back to List</a>
+            </div>*@
+
+        <script type="text/javascript">
+
+
+            function SubmitForm() {
+                var doctorId = $("#drpDoctor").val();
+                $("#DoctorId").val(doctorId);
+                return true;
+            }
+            $("#HospitalId").change(function () {
+                BindDoctorDropDown($("#HospitalId").val());
+            });
+
+            $(document).ready(function () {
+                //debugger;
+                BindDoctorDropDown($("#HospitalId").val());
+            });
+
+            function BindDoctorDropDown(id) {
+
+                if (id != "") {
+                    $.ajax({
+                        url: "/Hospital/Hospitaltemp/GetDoctorByHospitalId",
+                        type: "GET",
+                        data: { hospitalId: id },
+                        dataType: "json",
+                        success: function (citydata) {
+                            //debugger;
+                            $("#drpDoctor").empty();
+                            $("#drpDoctor").append("<option value=''>--- Select Doctor ---</option>");
+                            $.each(citydata, function (key, item) {
+                                $("#drpDoctor").append("<option value='" + item.doctorId + "'>" + item.firstName + " " + item.lastName + "</option>");
+                            });
+                        }
+                    });
+                }
+
+            }
+        </script>
+        <div class="col-md-2">
+            <div class="row"></div>
+        </div>
+    </div>
+</div>

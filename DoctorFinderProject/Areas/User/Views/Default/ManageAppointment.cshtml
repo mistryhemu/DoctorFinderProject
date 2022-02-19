@@ -1,0 +1,74 @@
+﻿@model IEnumerable<DoctorFinderProject.Models.Appointmenttbl>
+
+@{
+    ViewData["Title"] = "ManageAppointment";
+    Layout = "~/Areas/User/Views/UserTempLayout.cshtml";
+}
+
+<h2>ManageAppointment</h2>
+<div class="container mt-100">
+    <p>
+        <a asp-action="AddApointment" >Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                @*<th>
+                    @Html.DisplayNameFor(model => model.AptId)
+                </th>*@
+                <th>
+                    <label>Hospital Name</label>
+                    @*@Html.DisplayNameFor(model => model.HospitalId)*@
+                </th>
+                <th>
+                    <label>Patient Name</label>
+                   @* @Html.DisplayNameFor(model => model.PateintId)*@
+                </th>
+                <th>
+                    <label>Doctor Name</label>
+                    @*@Html.DisplayNameFor(model => model.DoctorId)*@
+                </th>
+                <th>
+                    <label>Date & Time</label>
+                    @*@Html.DisplayNameFor(model => model.AptDateTime)*@
+                </th>
+                <th>
+                    <label>Status</label>
+                    @*@Html.DisplayNameFor(model => model.AptStatus)*@
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.AptId)
+                    </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem =>  item.HospitalId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PateintId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DoctorId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AptDateTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AptStatus)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "EditAppointment", new {  AptId=item.AptId  }) |
+                       @* @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
+                        @Html.ActionLink("Delete", "DeleteAppointment", new { Id = item.AptId  })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

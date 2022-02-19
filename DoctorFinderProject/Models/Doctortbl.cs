@@ -7,6 +7,11 @@ namespace DoctorFinderProject.Models
 {
     public partial class Doctortbl
     {
+        public Doctortbl()
+        {
+            Appointmenttbls = new HashSet<Appointmenttbl>();
+        }
+
         public int DoctorId { get; set; }
         public int HospitalId { get; set; }
         public string FirstName { get; set; }
@@ -18,5 +23,6 @@ namespace DoctorFinderProject.Models
         public string Speciality { get; set; }
 
         public virtual Hospitaltbl Hospital { get; set; }
+        public virtual ICollection<Appointmenttbl> Appointmenttbls { get; set; }
     }
 }

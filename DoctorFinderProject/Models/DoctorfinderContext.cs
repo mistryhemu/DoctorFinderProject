@@ -18,6 +18,7 @@ namespace DoctorFinderProject.Models
         }
 
         public virtual DbSet<Admintbl> Admintbls { get; set; }
+        public virtual DbSet<Appointmenttbl> Appointmenttbls { get; set; }
         public virtual DbSet<Citytbl> Citytbls { get; set; }
         public virtual DbSet<Doctortbl> Doctortbls { get; set; }
         public virtual DbSet<Hospitaltbl> Hospitaltbls { get; set; }
@@ -62,6 +63,45 @@ namespace DoctorFinderProject.Models
                 entity.Property(e => e.Password)
                     .HasMaxLength(50)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Appointmenttbl>(entity =>
+            {
+                entity.HasKey(e => e.AptId);
+
+                entity.ToTable("Appointmenttbl");
+
+                entity.Property(e => e.AptId).HasColumnName("Apt_id");
+
+                entity.Property(e => e.AptDateTime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Apt_Date&time");
+
+                entity.Property(e => e.AptStatus).HasColumnName("Apt_status");
+
+                entity.Property(e => e.DoctorId).HasColumnName("Doctor_id");
+
+                entity.Property(e => e.HospitalId).HasColumnName("Hospital_id");
+
+                entity.Property(e => e.PateintId).HasColumnName("Pateint_id");
+
+                entity.HasOne(d => d.Doctor)
+                    .WithMany(p => p.Appointmenttbls)
+                    .HasForeignKey(d => d.DoctorId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Appointmenttbl_Doctortbl");
+
+                entity.HasOne(d => d.Hospital)
+                    .WithMany(p => p.Appointmenttbls)
+                    .HasForeignKey(d => d.HospitalId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Appointmenttbl_Hospitaltbl");
+
+                entity.HasOne(d => d.Pateint)
+                    .WithMany(p => p.Appointmenttbls)
+                    .HasForeignKey(d => d.PateintId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Appointmenttbl_Pateinttbl");
             });
 
             modelBuilder.Entity<Citytbl>(entity =>

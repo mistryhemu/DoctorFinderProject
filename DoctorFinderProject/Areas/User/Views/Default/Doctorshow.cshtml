@@ -28,10 +28,10 @@
 <section class="w3l-serices-6 py-5" id="services1">
     <div class="container py-lg-5 py-md-4 py-2">
         <div class="title-content text-center">
-            <h6 class="title-subhny text-center">
+            @*<h6 class="title-subhny text-center">
                 Services
-            </h6>
-            <h3 class="title-w3l mb-sm-5 mb-4 pb-sm-o pb-2 text-center">Hospitals</h3>
+            </h6>*@
+            <h3 class="title-w3l mb-sm-5 mb-4 pb-sm-o pb-2 text-center">Doctors</h3>
         </div>
         <div class="grids-area-hny text-center row mt-lg-4">
             @foreach (var item in Model)
@@ -39,7 +39,7 @@
 
                 <div class="col-lg-4 col-md-6 grids-feature">
                     <div class="area-box icon-blue">
-                        <a href="#"> <img src="~/Uploads/@item.ProfileImage" alt="" class="img-fluid radius-image" style="max-height:426px !important;width:640px !important; height:426px !important"></a>
+                        <a href="#"> <img src="~/Uploads/@item.ProfileImage" alt="" class="img-fluid radius-image" style="max-height:300px !important;width:400px !important; height:400px !important"></a>
 
                         <h4> @Html.ActionLink((string)@item.FirstName, "DoctorDetails", new { DoctorId = item.DoctorId })</h4>
                         <!--/des-->

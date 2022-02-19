@@ -103,15 +103,19 @@ p {
   margin-bottom: 1rem;
 }
 
+.mt-100{
+    margin-top:100px;
+}
+
 abbr[title],
 abbr[data-original-title] {
-  text-decoration: underline;
-  -webkit-text-decoration: underline dotted;
-  text-decoration: underline dotted;
-  cursor: help;
-  border-bottom: 0;
-  -webkit-text-decoration-skip-ink: none;
-  text-decoration-skip-ink: none;
+    text-decoration: underline;
+    -webkit-text-decoration: underline dotted;
+    text-decoration: underline dotted;
+    cursor: help;
+    border-bottom: 0;
+    -webkit-text-decoration-skip-ink: none;
+    text-decoration-skip-ink: none;
 }
 
 address {
@@ -14483,14 +14487,14 @@ button.navbar-toggler.collapsed .icon-expand {
 }
 
 .header-w3l header {
-  background: transparent;
-  padding: 0px;
-  transition: all 0.4s ease 0s;
-  height: 90px;
-  display: grid;
-  align-items: center;
-  box-shadow: none;
-  z-index: 99;
+    background: #0f1113;
+    padding: 0px;
+    transition: all 0.4s ease 0s;
+    height: 90px;
+    display: grid;
+    align-items: center;
+    box-shadow: none;
+    z-index: 99;
 }
 
 .header-w3l .navbar {

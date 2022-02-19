@@ -1,0 +1,52 @@
+﻿@model DoctorFinderProject.Models.Appointmenttbl
+
+@{
+    ViewData["Title"] = "EditAppointment";
+    Layout = "~/Areas/User/Views/UserTempLayout.cshtml";
+}
+
+<h2>EditAppointment</h2>
+
+<h4>Appointmenttbl</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditAppointment" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                @Html.HiddenFor(m=> m.AptId)
+            <div class="form-group">
+                <label  class="control-label">Hospital Name</label>
+                @Html.DropDownListFor(m => m.HospitalId, ViewBag.hospitals as IEnumerable<SelectListItem>, "--- Select Hospital ---", new { @class = "form-control" })
+                <span asp-validation-for="HospitalId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label  class="control-label">Patient Name</label>
+                <input asp-for="PateintId" class="form-control" readonly/>
+              
+            </div>
+            <div class="form-group">
+                <label  class="control-label">Doctor Name</label>
+                <input asp-for="DoctorId" class="form-control" />
+                <span asp-validation-for="DoctorId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Date Time</label>
+                <input asp-for="AptDateTime" class="form-control" />
+                <span asp-validation-for="AptDateTime" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="AptStatus" class="control-label"></label>
+                <input asp-for="AptStatus" class="form-control" />
+                <span asp-validation-for="AptStatus" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="ManageAppointment">Back to List</a>
+</div>
+

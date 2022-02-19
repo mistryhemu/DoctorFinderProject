@@ -9,6 +9,7 @@ namespace DoctorFinderProject.Models
     {
         public Hospitaltbl()
         {
+            Appointmenttbls = new HashSet<Appointmenttbl>();
             Doctortbls = new HashSet<Doctortbl>();
         }
 
@@ -25,6 +26,7 @@ namespace DoctorFinderProject.Models
 
         public virtual Citytbl City { get; set; }
         public virtual Statetbl State { get; set; }
+        public virtual ICollection<Appointmenttbl> Appointmenttbls { get; set; }
         public virtual ICollection<Doctortbl> Doctortbls { get; set; }
     }
 }
