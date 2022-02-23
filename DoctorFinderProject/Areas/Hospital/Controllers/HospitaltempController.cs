@@ -1,8 +1,10 @@
-﻿using DoctorFinderProject.Models;
+﻿using DoctorFinderProject.Controllers;
+using DoctorFinderProject.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -49,6 +51,7 @@ namespace DoctorFinderProject.Areas.Hospital.Controllers
             {
                 //cookies
                 //session
+                _httpContextAccessor.HttpContext.Session.SetString("hospId", Convert.ToString(data.HospitalId));
                 _httpContextAccessor.HttpContext.Session.SetString("Profile", "../../Uploads/" + data.ProfileImage);
                 _httpContextAccessor.HttpContext.Session.SetString("email", email);
 
@@ -59,6 +62,46 @@ namespace DoctorFinderProject.Areas.Hospital.Controllers
                 ViewBag.loginerror = "Invalid Email or password!";
             }
             return View();
+        }
+        public IActionResult Registration()
+        {
+            var data = dc.Statetbls.ToList();
+
+            List<SelectListItem> li = new List<SelectListItem>();
+            foreach (var item in data)
+            {
+                li.Add(new SelectListItem { Text = item.StateName, Value = item.StateId.ToString() });
+            }
+            ViewBag.states = li;
+            return View();
+
+        }
+        [HttpPost]
+        public IActionResult Registration(IFormCollection fc)
+        {
+            Pateinttbl obj = new Pateinttbl();
+            obj.FirstName = fc["firstname"];
+            obj.LastName = fc["lastname"];
+            obj.Email = fc["email"];
+            obj.Password = fc["pass"];
+            obj.Address = fc["address"];
+            obj.StateId = Convert.ToInt32(fc["stateId"]);
+            obj.CityId = Convert.ToInt32(fc["city"]);
+
+
+
+
+
+
+            dc.Pateinttbls.Add(obj);
+            dc.SaveChanges();
+            return RedirectToAction("Hospital");
+        }
+
+        public JsonResult GetCitynameByStateId(int StateId)
+        {
+            var data = dc.Citytbls.Where(s => s.StateId == StateId);
+            return Json(data.ToList());
         }
         public IActionResult ManageHospital()
         {
@@ -104,7 +147,7 @@ namespace DoctorFinderProject.Areas.Hospital.Controllers
         public IActionResult Edit(int HospitalId)
         {
             var data = dc.Statetbls.ToList();
-            
+
             List<SelectListItem> li = new List<SelectListItem>();
             foreach (var item in data)
             {
@@ -211,7 +254,7 @@ namespace DoctorFinderProject.Areas.Hospital.Controllers
         public IActionResult EditPatient(int PateintId)
         {
             var data = dc.Statetbls.ToList();
-           // string existingImage = dc.Pateinttbls.Find(PateintId).ProfileImage;
+            // string existingImage = dc.Pateinttbls.Find(PateintId).ProfileImage;
             List<SelectListItem> li = new List<SelectListItem>();
             foreach (var item in data)
             {
@@ -327,38 +370,38 @@ namespace DoctorFinderProject.Areas.Hospital.Controllers
         }
         [HttpPost]
         public IActionResult EditDoctor(Doctortbl obj, List<IFormFile> postedFiles)
-        {       
-                string wwwpath = env.WebRootPath;
-                string contentPath = env.ContentRootPath;
+        {
+            string wwwpath = env.WebRootPath;
+            string contentPath = env.ContentRootPath;
 
-                string path = Path.Combine(env.WebRootPath, "Uploads");
-                if (!Directory.Exists(path))
-                {
-                    Directory.CreateDirectory(path);
-                }
-
-                List<string> uploadedFiles = new List<string>();
-                foreach (IFormFile postedFile in postedFiles)
-                {
-                    string filename = Path.GetFileName(postedFile.FileName);
-                    using (FileStream stream = new FileStream(Path.Combine(path, filename), FileMode.Create))
-                    {
-                        postedFile.CopyTo(stream);
-                        uploadedFiles.Add(filename);
-                        obj.ProfileImage = filename;
-                    }
-                }
-                //obj.CityId = 1;
-                //obj.StateId = 1;
-                dc.Doctortbls.Update(obj);
-                dc.SaveChanges();
-                return RedirectToAction("ManageDoctor");
+            string path = Path.Combine(env.WebRootPath, "Uploads");
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
             }
 
-            //dc.Doctortbls.Update(obj);
-            //dc.SaveChanges();
-            //return RedirectToAction("ManageDoctor");
-        
+            List<string> uploadedFiles = new List<string>();
+            foreach (IFormFile postedFile in postedFiles)
+            {
+                string filename = Path.GetFileName(postedFile.FileName);
+                using (FileStream stream = new FileStream(Path.Combine(path, filename), FileMode.Create))
+                {
+                    postedFile.CopyTo(stream);
+                    uploadedFiles.Add(filename);
+                    obj.ProfileImage = filename;
+                }
+            }
+            //obj.CityId = 1;
+            //obj.StateId = 1;
+            dc.Doctortbls.Update(obj);
+            dc.SaveChanges();
+            return RedirectToAction("ManageDoctor");
+        }
+
+        //dc.Doctortbls.Update(obj);
+        //dc.SaveChanges();
+        //return RedirectToAction("ManageDoctor");
+
         public IActionResult DeleteDoctor(int Id)
         {
             return View(dc.Doctortbls.Find(Id));
@@ -371,8 +414,72 @@ namespace DoctorFinderProject.Areas.Hospital.Controllers
             dc.SaveChanges();
             return RedirectToAction("ManageDoctor");
         }
+        public IActionResult ManageAppointment()
+        {
 
+            var data = dc.Appointmenttbls
+                .Include(x => x.Hospital)
+                .Include(d => d.Doctor)
+                .Include(z => z.Pateint)
+                .Where(t => t.HospitalId == Convert.ToInt32(_httpContextAccessor.HttpContext.Session.GetString("hospId"))).ToList();
+            return View(data);
+
+
+        }
+        public IActionResult EditAppointment(int AptId)
+        {
+
+
+            var patientID = dc.Appointmenttbls.Find(AptId).PateintId;
+
+            ViewBag.PatientName = dc.Pateinttbls.Find(patientID).FirstName + " " + dc.Pateinttbls.Find(patientID).LastName;
+
+            var DoctorID = dc.Doctortbls.Find(AptId).DoctorId;
+
+            ViewBag.DoctorName = dc.Doctortbls.Find(DoctorID).FirstName + " " + dc.Doctortbls.Find(DoctorID).LastName;
+
+            List<SelectListItem> li = new List<SelectListItem>();
+
+            var enumData = from CommonController.AppointmentStatus e in Enum.GetValues(typeof(CommonController.AppointmentStatus))
+                           select new
+                           {
+                               ID = (int)e,
+                               Name = e.ToString()
+                           };
+
+            ViewBag.EnumList = new SelectList(enumData, "ID", "Name");
+
+            return View(dc.Appointmenttbls.Find(AptId));
+        }
+        [HttpPost]
+
+        public IActionResult EditAppointment(Appointmenttbl obj)
+        {
+            obj.HospitalId = Convert.ToInt32(_httpContextAccessor.HttpContext.Session.GetString("hospId"));
+            dc.Appointmenttbls.Update(obj);
+            dc.SaveChanges();
+            return RedirectToAction("ManageAppointment");
+        }
+        public IActionResult DeleteAppointment(int Id)
+        {
+            var data = dc.Appointmenttbls
+             .Include(x => x.Hospital)
+             .Include(d => d.Doctor)
+             .Include(z => z.Pateint)
+             .Where(t => t.HospitalId == Convert.ToInt32(_httpContextAccessor.HttpContext.Session.GetString("hospId"))).ToList();
+
+            return View(dc.Appointmenttbls.Find(Id));
+        }
+        [HttpPost]
+        [ActionName("DeleteAppointment")]
+        public IActionResult DeleteAppointmentRec(int Id)
+        {
+            dc.Appointmenttbls.Remove(dc.Appointmenttbls.Find(Id));
+            dc.SaveChanges();
+            return RedirectToAction("ManageAppointment");
+        }
     }
 }
+
 
 

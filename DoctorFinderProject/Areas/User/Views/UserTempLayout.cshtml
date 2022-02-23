@@ -1,4 +1,16 @@
-﻿
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor httpContextAccessor;
+@*@{
+      //Session Check
+      var check_Session = httpContextAccessor.HttpContext.Session.GetString("email");
+      if(check_Session == null)
+      {
+      ViewData["Session"] = check_Session;
+      <script>
+          window.location.href = "@Url.Action("UserLogin", "Default")";
+      </script>
+      }
+    }*@
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +27,7 @@
     <!-- Template CSS -->
     <link rel="stylesheet" href="~/MedickStarter/assets/css/style-starter.css">
     <script src="~/Hospitalweb/js/jquery-1.11.1.min.js"></script>
+
 </head>
 
 <body>
@@ -40,10 +53,10 @@
                     <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                         <ul class="navbar-nav mx-lg-auto">
                             <li class="nav-item active">
-                                <a class="nav-link" href="index.html">Home</a>
+                                <a class="nav-link" href="Home">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="about.html">About</a>
+                                <a class="nav-link" href="ManageAppointment">Appointments</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="Hospitalshow">Hospitals</a>
@@ -78,9 +91,27 @@
                                     </div>
 
                                 </label>
-                                <li class="nav-item">
-                                        <a class="nav-link" href="~/MedickStarter/contact.html">Login</a>
-                                    </li>
+                                <div class="profile_details">
+                                    <ul>
+                                        <li class="dropdown profile_details_drop">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                <div class="profile_img">
+                                                    <span class="prfil-img"><img src="@httpContextAccessor.HttpContext.Session.GetString("Profile")" alt="" width="50" height="50"> </span>
+                                                    <div class="user-name">
+                                                        <p>@httpContextAccessor.HttpContext.Session.GetString("email")</p>
+                                                        </div>
+                                                    </div>
+                                            </a>
+                                            <ul class="dropdown-menu drp-mnu">
+                                                <li> <a href="#"><i class="fa fa-cog"></i> Settings</a> </li>
+                                                <li> <a href="#"><i class="fa fa-user"></i> My Account</a> </li>
+                                                <li> <a href="#"><i class="fa fa-suitcase"></i> Profile</a> </li>
+                                                <li> @Html.ActionLink("Logout", "Logout")</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+
                             </div>
                         </nav>
                     </div>

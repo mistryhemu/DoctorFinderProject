@@ -1,4 +1,5 @@
 ﻿@model DoctorFinderProject.Models.Appointmenttbl
+@using Microsoft.AspNetCore.Http;
 
 @{
     ViewData["Title"] = "AddApointment";
@@ -28,8 +29,8 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Patient Name</label>
-                    <input asp-for="PateintId" class="form-control" readonly="readonly" />
-                    <span asp-validation-for="PateintId" class="text-danger"></span>
+                    @Html.TextBox("txtUserName", (string)@Context.Session.GetString("userName"), new { disabled = "disabled", @class = "form-control" })
+                    
                 </div>
                 <div class="form-group">
                     <label class="control-label">Doctor Name</label>
@@ -63,7 +64,21 @@
             function SubmitForm() {
                 var doctorId = $("#drpDoctor").val();
                 $("#DoctorId").val(doctorId);
-                return true;
+
+                
+
+                if ($("#HospitalId").val() == "") {
+                    alert("select Hospital");
+                    return false;
+                }
+                if ($("#DoctorId").val() == "") {
+                    alert("select Doctor");
+                    return false;
+                }
+                if ($("#AptDateTime").val() == "") {
+                    alert("select Date Time");
+                    return false;
+                }
             }
             $("#HospitalId").change(function () {
                 BindDoctorDropDown($("#HospitalId").val());

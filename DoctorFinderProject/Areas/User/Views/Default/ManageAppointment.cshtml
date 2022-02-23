@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<DoctorFinderProject.Models.Appointmenttbl>
-
+@using DoctorFinderProject.Controllers;
 @{
     ViewData["Title"] = "ManageAppointment";
     Layout = "~/Areas/User/Views/UserTempLayout.cshtml";
@@ -36,7 +36,9 @@
                     <label>Status</label>
                     @*@Html.DisplayNameFor(model => model.AptStatus)*@
                 </th>
-                <th></th>
+                <th>
+                    <label></label>
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -47,19 +49,25 @@
                         @Html.DisplayFor(modelItem => item.AptId)
                     </td>*@
                     <td>
-                        @Html.DisplayFor(modelItem =>  item.HospitalId)
+                        @Html.DisplayFor(modelItem =>  item.Hospital.HospitalName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.PateintId)
+                        @Html.DisplayFor(modelItem => item.Pateint.FirstName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.DoctorId)
+                        @Html.DisplayFor(modelItem => item.Doctor.FirstName)
+                        @Html.DisplayFor(modelItem => item.Doctor.LastName)
+
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.AptDateTime)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.AptStatus)
+                        @{
+
+                            string AptStatusName = Enum.GetName(typeof(CommonController.AppointmentStatus),string.IsNullOrEmpty(Convert.ToString(item.AptStatus)) ? 0 : item.AptStatus);
+                        }
+                        @Html.DisplayFor(modelItem => AptStatusName)
                     </td>
                     <td>
                         @Html.ActionLink("Edit", "EditAppointment", new {  AptId=item.AptId  }) |

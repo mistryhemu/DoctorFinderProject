@@ -1,0 +1,78 @@
+﻿@model IEnumerable<DoctorFinderProject.Models.Appointmenttbl>
+@using DoctorFinderProject.Controllers;
+
+@{
+    ViewData["Title"] = "ManageAppointment";
+    Layout = "~/Areas/Hospital/Views/HospitalLayout.cshtml";
+}
+
+<h2>ManageAppointment</h2>
+
+<p>
+    @*<a asp-action="Create">Create New</a>*@
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.AptId)
+                </th>*@
+            <th>
+                <label>Hospital Name</label>
+                @*@Html.DisplayNameFor(model => model.HospitalId)*@
+            </th>
+            <th>
+                <label>Patient Name</label>
+                @*@Html.DisplayNameFor(model => model.PateintId)*@
+            </th>
+            <th>
+                <label>Doctor Name</label>
+                @*@Html.DisplayNameFor(model => model.DoctorId)*@
+            </th>
+            <th>
+                <label>Apt Date Time</label>
+                @*@Html.DisplayNameFor(model => model.AptDateTime)*@
+            </th>
+            <th>
+                <label>Status</label>
+                @*@Html.DisplayNameFor(model => model.AptStatus)*@
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.AptId)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Hospital.HospitalName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pateint.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Doctor.FirstName)
+                    @Html.DisplayFor(modelItem => item.Doctor.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AptDateTime)
+                </td>
+                <td>
+                    @{
+
+                        string AptStatusName = Enum.GetName(typeof(CommonController.AppointmentStatus), string.IsNullOrEmpty(Convert.ToString(item.AptStatus)) ? 0 : item.AptStatus);
+                    }
+                    @Html.DisplayFor(modelItem => AptStatusName)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditAppointment", new { AptId = item.AptId }) |
+                    @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
+                    @Html.ActionLink("Delete", "DeleteAppointment", new {  Id=item.AptId })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

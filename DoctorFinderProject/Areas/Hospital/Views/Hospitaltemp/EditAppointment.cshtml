@@ -1,0 +1,61 @@
+﻿@model DoctorFinderProject.Models.Appointmenttbl
+@using DoctorFinderProject.Controllers;
+@using Microsoft.AspNetCore.Http; 
+@{
+    ViewData["Title"] = "EditAppointment";
+    Layout = "~/Areas/Hospital/Views/HospitalLayout.cshtml";
+}
+
+<h2>EditAppointment</h2>
+
+<h4>Appointmenttbl</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditAppointment">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                @Html.HiddenFor(m => m.AptId)
+                @Html.HiddenFor(m => m.PateintId)
+                @Html.HiddenFor(m => m.DoctorId)
+                @*<label asp-for="AptId" class="control-label"></label>
+        <input asp-for="AptId" class="form-control" />
+        <span asp-validation-for="AptId" class="text-danger"></span>*@
+            </div>
+            @*<div class="form-group">
+                <label asp-for="HospitalId" class="control-label"></label>
+                <input asp-for="HospitalId" class="form-control" />
+                <span asp-validation-for="HospitalId" class="text-danger"></span>
+            </div>*@
+        <div class="form-group">
+            <label>Patient Name</label>
+            @*<label asp-for="PateintId" class="control-label"></label>*@
+            @Html.TextBox("txtUserName", (string)ViewBag.PatientName, new { disabled = "disabled", @class = "form-control" })
+            <span asp-validation-for="PateintId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Doctor Name</label>
+            @*<label asp-for="DoctorName" class="control-label"></label>*@
+            @Html.TextBox("txtUserName", (string)ViewBag.DoctorName, new { disabled = "disabled", @class = "form-control" })
+        </div>
+            <div class="form-group">
+                <label asp-for="AptDateTime" class="control-label"></label>
+                <input asp-for="AptDateTime" class="form-control" />
+                <span asp-validation-for="AptDateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AptStatus" class="control-label"></label>
+                @Html.DropDownListFor(m => m.AptStatus, ViewBag.EnumList as SelectList, new { @class = "form-control" })
+                
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

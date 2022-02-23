@@ -25,6 +25,7 @@
                 @Html.TextBoxFor(model => model.HospitalId, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.HospitalId, "", new { @class = "text-danger" })
             </div>
+             @Html.HiddenFor(model => model.ProfileImage)
         </div>
 
         <div class="form-group">
