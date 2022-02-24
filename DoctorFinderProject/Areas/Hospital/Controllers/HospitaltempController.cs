@@ -434,7 +434,7 @@ namespace DoctorFinderProject.Areas.Hospital.Controllers
 
             ViewBag.PatientName = dc.Pateinttbls.Find(patientID).FirstName + " " + dc.Pateinttbls.Find(patientID).LastName;
 
-            var DoctorID = dc.Doctortbls.Find(AptId).DoctorId;
+            var DoctorID = dc.Appointmenttbls.Find(AptId).DoctorId;
 
             ViewBag.DoctorName = dc.Doctortbls.Find(DoctorID).FirstName + " " + dc.Doctortbls.Find(DoctorID).LastName;
 

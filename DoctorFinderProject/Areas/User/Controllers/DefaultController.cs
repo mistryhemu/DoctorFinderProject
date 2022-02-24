@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 
 namespace DoctorFinderProject.Areas.User.Controllers
@@ -208,6 +210,49 @@ namespace DoctorFinderProject.Areas.User.Controllers
             dc.Appointmenttbls.Remove(dc.Appointmenttbls.Find(Id));
             dc.SaveChanges();
             return RedirectToAction("ManageAppointment");
+        }
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        public JsonResult SendPasswordLink(string emailAddress)
+        {
+            try
+            {
+
+                string htmlString = @"<div><span> Click on below link to Reset the Password. 
+                <hr>
+                <a href='https://localhost:44327/User/Default/ResetPassword?email=" + emailAddress  + 
+                @"' target='_blank' >Reset Password </a>
+                </span></div>";
+                MailMessage message = new MailMessage();
+                SmtpClient smtp = new SmtpClient();
+                message.From = new MailAddress("hemu11298@gmail.com");
+                message.To.Add(new MailAddress(emailAddress));
+                message.Subject = "Password Reset Link";
+                message.IsBodyHtml = true; //to make message body as html  
+                message.Body = htmlString;
+                smtp.Port = 587;
+                smtp.Host = "smtp.gmail.com"; //for gmail host  
+                smtp.EnableSsl = true;
+                smtp.UseDefaultCredentials = false;
+                smtp.Credentials = new NetworkCredential("hemu11298@gmail.com", "Hemu@1114");
+                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtp.Send(message);
+
+                
+            }
+            catch (Exception) {
+
+                return Json("fail");
+            }
+        
+            return Json("success");
+        }
+        public IActionResult ResetPassword()
+        {
+            return View();
         }
     }
     }
